@@ -20,7 +20,7 @@ server.applyMiddleware({ app });
 
 
 // // REE | Serve the static files from the React app
-// app.use(express.static(path.join(__dirname, '../client/build')));
+app.use(express.static(path.join(__dirname, '../client/build')));
 // REE | Puppeteer Endpoint
 app.get('/api/getList', (req, res) => {
   console.log("REQUEST | params , query , route");
@@ -65,10 +65,9 @@ app.get('/api/getList', (req, res) => {
   console.log('Sent list of items');
 });
 // REE | Handles any requests that don't match the ones above
-// app.get('*', (req, res) => {
-//   console.log(req.query);
-//   res.sendFile(path.join(__dirname + '../client/build/index.html'));
-// });
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname + '../client/build/index.html'));
+});
 app.get('/barfoo', (req, res) => {
   console.log("+++++++++");
   console.log("REQUEST | params , query , route");
