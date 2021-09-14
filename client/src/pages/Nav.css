@@ -8,7 +8,7 @@
   padding: 20px;
   transition-timing-function: ease-in;
   transition: all 0.5s;
-  z-index: 2;
+  z-index: 100;
 }
 
 .nav__black {
