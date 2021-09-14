@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-mongoose.connect(process.env.ORMONGO_RS_URL || 'mongodb://localhost/techmatchup', {
+mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost/teatro', {
   useNewUrlParser: true,
   useUnifiedTopology: true,
   useCreateIndex: true,
