@@ -1,31 +1,27 @@
 import React, { useState, useEffect, useRef } from "react";
-// import YouTube from "react-youtube";
-// import movieTrailer from "movie-trailer";
+
 import axios from "./axios";
 import "./Row.css";
 import { Link } from "react-router-dom";
 import gsap, {TweenMax ,Expo, } from 'gsap';
-
-
-
 const base_url = "https://image.tmdb.org/t/p/original/";
 
 
-function Row({title, fetchUrlMovie, isLargeRow }) {
-  const [movies, setMovies] = useState([]);
+function TvRow({title, fetchUrlTv, isLargeRow}) {
+    const [tvs, setTvs] = useState([]);
   // const [tvs, setTvs] = useState([]);
   // const [trailerUrl, setTrailerUrl] = useState("");
   let tl = gsap.timeline({defaults: {ease: "SlowMo.easeOut"}})
   let imgs = useRef(null)
   useEffect(() => {
-    async function fetchData() {
-      const request = await axios.get(fetchUrlMovie);
-      setMovies(request.data.results);
+    async function fetchTv() {
+      const request = await axios.get(fetchUrlTv);
+      setTvs(request.data.results);
       return request;
     }
-    console.log(fetchUrlMovie);
-    fetchData();
-  }, [fetchUrlMovie]);
+    console.log(fetchUrlTv);
+    fetchTv();
+  }, [fetchUrlTv]);
   
   // useEffect(() => {
   //   async function fetchTv() {
@@ -45,6 +41,7 @@ function Row({title, fetchUrlMovie, isLargeRow }) {
       {
           opacity: 1,
           stagger:1.2,
+        
           scale: 1.1,
           delay: 2,
           duration:3,
@@ -62,11 +59,11 @@ function Row({title, fetchUrlMovie, isLargeRow }) {
   //   },
   // };
 
-  // const handleClick = (movie) => {
+  // const handleClick = (tv) => {
   //   if (trailerUrl) {
   //     setTrailerUrl("");
   //   } else {
-  //     movieTrailer(movie?.name || movie?.title || movie?.original_name || "")
+  //     movieTrailer(tv?.name || tv?.title || tv?.original_name || "")
   //       .then((url) => {
   //         const urlParams = new URLSearchParams(new URL(url).search);
   //         setTrailerUrl(urlParams.get("v"));
@@ -84,26 +81,24 @@ function Row({title, fetchUrlMovie, isLargeRow }) {
       
       <div className="row__posters" ref={el => imgs = el}>
       
-        {movies.map((movie) => (
-          <Link to={`/movie/${movie.id}`}  >
+        {tvs.map((tv) => (
+          <Link to={`/tv/${tv.id}`}  >
             
             <div className="poster" >
             <img
-              key={movie.id}
+              key={tv.id}
               
-              // onClick={() => handleClick(movie)}
+              // onClick={() => handleClick(tv)}
               className={`row__poster ${isLargeRow && "row__posterLarge"}`}
               src={`${base_url}${
-                isLargeRow ? movie.poster_path : movie.backdrop_path
+                isLargeRow ? tv.poster_path : tv.backdrop_path
               }`}
-              alt={movie.name}
+              alt={tv.name}
               
             />
-            
             <div className="onhover" >
-            <h1>{movie.title}</h1>
-            <h1>{movie.overview}</h1>
-            <h1>{movie.media_type}</h1>
+            <h1>{tv.title}</h1>
+            <h1>{tv.overview}</h1>
             </div>
             
 
@@ -112,32 +107,7 @@ function Row({title, fetchUrlMovie, isLargeRow }) {
           </Link>
         )
         )}
-        {/* {tvs.map((movie) => (
-          <Link to={`/details/${movie.id}`}  >
-            
-            <div className="poster" >
-            <img
-              key={movie.id}
-              
-              // onClick={() => handleClick(movie)}
-              className={`row__poster ${isLargeRow && "row__posterLarge"}`}
-              src={`${base_url}${
-                isLargeRow ? movie.poster_path : movie.backdrop_path
-              }`}
-              alt={movie.name}
-              
-            />
-            <div className="onhover" >
-            <h1>{movie.title}</h1>
-            <h1>{movie.overview}</h1>
-            </div>
-            
-
-            </div>
-            
-          </Link>
-        )
-        )} */}
+        
         
       </div>
       
@@ -145,6 +115,7 @@ function Row({title, fetchUrlMovie, isLargeRow }) {
     </div>
     
   );
+
 }
 
-export default Row;
+export default TvRow

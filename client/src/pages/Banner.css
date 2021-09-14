@@ -1,7 +1,7 @@
 .banner {
   color: white;
   object-fit: contain;
-  height: 90vh;
+  height: 80vh;
 }
 .all-details {
   display: flex;
@@ -19,7 +19,12 @@
   font-size: 2rem;
   font-weight: 800;
   padding-bottom: 0.3rem;
-  
+  opacity: 0;
+}
+.all-details{
+  text-align: left;
+  display: flex;
+  flex-direction: column;
 }
 
 .banner__description {
@@ -30,8 +35,35 @@
   font-size: 0.8rem;
   max-width: 560px;
   height: 80px;
+  opacity: 1;
 }
+.start__details{
+  display: flex;
+  opacity: 0;
+  padding-top: 20px;
+  align-items: center;
+}
+.start__details h1{
+  display: flex;
+  margin-left: 20px;
+  font-size: 1.5rem;
+  align-items: center;
+}
+.reviews{
+  display: flex;
+  
+}
+.banner_stars{
+  display: flex;
+  font-size: 0.8rem;
+  font-weight: 400;
 
+
+  
+}
+.banner__buttons{
+  padding-top: 100px;
+}
 .banner__button {
   cursor: pointer;
   color: white;
@@ -43,8 +75,9 @@
   padding-right: 2rem;
   margin-right: 1rem;
   padding-top: 0.5rem;
-  background-color: rgba(51, 51, 51, 0.5);
+  background-color: #D01926;
   padding-bottom: 0.5rem;
+  opacity: 0;
 }
 
 .banner__button:hover {
@@ -54,7 +87,7 @@
 }
 .banner__fadeBottom {
   height: 100vh;
-  margin-top: -367px;
+  margin-top: -460px;
   background-image: linear-gradient(
     -90deg,
     transparent,
