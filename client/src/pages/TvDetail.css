@@ -1,7 +1,7 @@
 .movie__details {
   color: white;
   background-color: #111;
-  height: 200vh;
+  height: auto;
 }
 .poster {
   display: flex;

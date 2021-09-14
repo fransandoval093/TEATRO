@@ -1,0 +1,69 @@
+.person__details{
+    font-size: 0.5rem;
+    padding-top: 100px;
+}
+
+.person__poster{
+    display: flex;
+    font-size: 0.5rem;
+    
+
+}
+
+.poster__info{
+    font-size: 0.8rem;
+    text-align: left;
+    padding-left: 50px;
+    color: white;
+}
+.person__description{
+    font-size: 0.5rem;
+}
+
+
+.person_movie_list{
+    padding-top: 50px;
+    display: flex;
+    flex-wrap: wrap;
+    overflow-y: hidden;
+    overflow-x: scroll;
+}
+
+.person__row__cast{
+    display: flex;
+    flex-direction: column;
+    
+}
+
+.person__img__actor{
+    max-width: 600px;
+    max-height: 150px;
+    padding-left: 20px;
+}
+
+
+.person_movie_list_search{
+    display: flex;
+    /* flex-wrap: wrap; */
+    overflow-y: hidden;
+    overflow-x: scroll;
+}
+.person_tv_list_search{
+    display: flex;
+    /* flex-wrap: wrap; */
+    overflow-y: hidden;
+    overflow-x: scroll;
+    padding-bottom: 50px;
+}
+
+.person_movie_list_search::-webkit-scrollbar {
+    display: none;
+  }
+.person_tv_list_search::-webkit-scrollbar {
+    display: none;
+  }
+
+
+.more_like_this{
+    padding-top: 500px;
+}

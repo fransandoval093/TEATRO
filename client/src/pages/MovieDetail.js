@@ -2,13 +2,14 @@ import React, { useEffect, useState } from "react";
 import "./MovieDetail.css";
 import movieTrailer from "movie-trailer";
 import YouTube from "react-youtube";
-
+import { Link } from "react-router-dom";
 
 const base_url = "https://image.tmdb.org/t/p/original/";
 function MovieDetail({ match }) {
   useEffect(() => {
     fetchMovie();
     fetchCredits();
+    fetchSimilars();
     console.log(match.params.id);
   }, [match]);
   const [movieQuery, setMovieQuery] = useState([]);
@@ -16,6 +17,7 @@ function MovieDetail({ match }) {
   const [movie, setMovie] = useState({});
   const [credits, setCredits] = useState([]);
   const [trailerUrl, setTrailerUrl] = useState("");
+  const [similars, setSimilars] = useState([]);
 
   function year(str, n) {
     return str?.length > n ? str.slice(0, 4) + "" : str;
@@ -59,6 +61,19 @@ function MovieDetail({ match }) {
     setCredits(credits.cast);
     console.log(credits);
   };
+
+  
+  const fetchSimilars = async () => {
+    const fetchSimilars = await fetch(
+      `
+      https://api.themoviedb.org/3/movie/${match.params.id}/similar?api_key=d42525da8940f7a7a298e98a209ec951&language=en-US&page=1`
+    );
+
+    const similars = await fetchSimilars.json();
+    setSimilars(similars.results);
+    console.log(similars);
+  };
+
   const fetchMovieQuery = async (movie) => {
 
     setQueryStatus("GETTING...")
@@ -112,7 +127,9 @@ function MovieDetail({ match }) {
         <div className="movie__info">
 
           <h1>{movie.original_title}</h1>
-
+          <h1>{year(movie.release_date, 4)}</h1>
+          <h1>{Math.floor(movie.runtime / 60)}h {movie.runtime % 60}min</h1>
+          <h1>{movie?.name}</h1>
           <h1 className="banner__description">
             {truncate(movie.overview, 150)}
           </h1>
@@ -135,7 +152,7 @@ function MovieDetail({ match }) {
                 return (
                   <div>
                     <h6>{movie.tagline}</h6>
-                    <iframe
+                    <iframe title="hi"
                       name="watch" id="IframeEmbed" height="auto" width="auto"
                       allowfullscreen="" frameborder="0" scrolling="no" __idm_frm__="49"
                       __idm_id__="324447233"
@@ -153,24 +170,63 @@ function MovieDetail({ match }) {
             </div>)
           }
           <hr></hr>
-
-
-          <div className="cast-details">
-            <h1>Cast</h1>
-            {credits.slice(0, 10).map((credit) => (
-              <div className="row__cast">
-                <div className="img__cast">
-                  <img
-                    // onClick={() => handleClick(movie)}
-                    className="img__actor"
-                    src={`${base_url}${credit.profile_path}`}
-                    alt={credit.name}
-                  />
-                </div>
-                <h1>{credit.name}</h1>
-              </div>
-            ))}
+          <div className="movie__overview">
+        <div className="small_poster">
+            <img 
+            key={movie.id}
+            className="poster__overview"
+            src={`${base_url}${movie.poster_path}`}
+            alt={movie.name}
+            />
+        </div>
+        <div className="movie_story">
+            <h1>Storyline</h1>
+            <h1>{movie.overview}</h1>
+       
+        <div className="movie_information">
+          <div className="movie_info">
+            <h1>Released </h1>
+            <h1>Budget </h1>
+            <h1>Revenue </h1>
+            <h1>Status</h1>
+            <h1>Runtime</h1>
+            <h1>Genre </h1>
           </div>
+          <div className="movie_api_info">
+            <h1>{movie.release_date}</h1>
+            <h1>${movie.budget}</h1>
+            <h1>${movie.revenue}</h1>
+            <h1>{movie.status}</h1>
+            <h1>{Math.floor(movie.runtime / 60)}h {movie.runtime % 60}min</h1>
+            {/* <h1>{movie.genres[0].name}, {movie.genres[1].name}</h1> */}
+          </div>
+        </div>
+        </div>
+      </div>
+
+      <div className="cast-details">
+        <div className="cast">
+        <h1>Cast</h1>
+        </div>
+        {credits.slice(0, 10).map((credit) => (
+          <Link to={`/person/${credit.id}`}  >
+          <div className="row__cast">
+            <div className="img__cast">
+            
+              <img
+                // onClick={() => handleClick(movie)}
+                className="img__actor"
+                src={`${base_url}${credit.profile_path}`}
+                alt={credit.name}
+              />
+            </div>
+            <h1>{credit.name}</h1>
+           
+                        
+          </div>
+          </Link>
+        ))}
+      </div>
 
         </div>
         <div>
@@ -192,23 +248,36 @@ function MovieDetail({ match }) {
       {trailerUrl && <YouTube videoId={trailerUrl} opts={opts} />}
 
       <div className="details__fadeBottom"></div>
+      <div className="more_like_this">
+            <div className="row">
+              <div className="row__posters" >
+              <h1>More Like this</h1>
+                {similars.map((similar) => (
+                  <Link to={`/movie/${similar.id}`}  >
+                    <div className="poster" >
+                      <img
+                        key={similar.id}
+                        // onClick={() => handleClick(movie)}
+                        className={`row__poster ${ "row__posterLarge"}`}
+                        src={`${base_url}${
+                          similar.poster_path || similar.backdrop_path
+                        }`}
+                        alt={similar.name}
+                      />
+                      <div className="onhover" >
+                        <h1>{similar.title}</h1>
+                        <h1>{similar.overview}</h1>
+                        <h1>{similar.media_type}</h1>
+                      </div>
+                    </div>
+                  </Link>
+                )
+                )}
+              </div>
+          </div>
+        </div>
 
     </div>
-
-
-    // <div className="App">
-    //   <h1>List of Items</h1>
-
-    //   <button
-    //     className="trailer__button movie__button"
-    //     onClick={() => fetchMovieQuery(movie)}>
-    //     {queryStatus}
-    //   </button>
-
-    // </div>
-
-
-
   );
 }
 

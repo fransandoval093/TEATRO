@@ -4,9 +4,11 @@ import Delete from './pages/Delete';
 import Foobar from './pages/Foobar';
 import Home from './pages/Home'; // REE and TEATRO
 import List from './pages/List';
+import MovieDetail from "./pages/MovieDetail";
+import TvDetail from "./pages/TvDetail";
+import PersonDetail from "./pages/PersonDetail";
 import LoginScreen from "./pages/HomeScreen/LoginScreen";
 import Matchup from './pages/Matchup';
-import MovieDetail from "./pages/MovieDetail";
 import Mylist from "./pages/Mylist"; // BASE
 import Nav from "./pages/Nav"; // BASE
 import React from 'react';
@@ -27,15 +29,25 @@ function App() {
       <Router>
         <LoginScreen />
         <Nav fetchUrl={requests.fetchSearch} />
-        <div className="flex-column justify-center align-center min-100-vh bg-primary">
+        <div >
           <Switch>
 
             {/* BASE COMPONENTS */}
             <Route
-              path="/details/:id"
-              component={MovieDetail}
-              fetchUrl={requests.fetchMovieDetails}
-            />
+            path="/movie/:id"
+            component={MovieDetail}
+            fetchUrlMovie={requests.fetchMovieDetails}
+          />
+                    <Route
+            path="/tv/:id"
+            component={TvDetail}
+            fetchUrlMovie={requests.fetchMovieDetails}
+          />
+          <Route
+            path="/person/:id"
+            component={PersonDetail}
+            fetchUrlMovie={requests.fetchMovieDetails}
+          />
             <Route exact path="/">
               <Home />
             </Route>
