@@ -13,7 +13,7 @@ import requests from "./requests";
 import Banner from "./Banner";
 import TvRow from "./TvRow";
 import gsap, {TweenMax ,Expo, } from 'gsap';
-import Marquee from "react-fast-marquee";
+// import Marquee from "react-fast-marquee";
 
 const Home = () => {
 

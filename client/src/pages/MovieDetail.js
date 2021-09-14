@@ -121,7 +121,7 @@ function MovieDetail({ match }) {
         <div className="movie__info">
 
           <h1>{movie.original_title}</h1>
-          <h1>{year(movie.release_date, 4)}</h1>
+          <h1>{formatYear(movie.release_date, 4)}</h1>
           <h1>{Math.floor(movie.runtime / 60)}h {movie.runtime % 60}min</h1>
           <h1>{movie?.name}</h1>
           <h1 className="banner__description">
