@@ -34,20 +34,20 @@ function App() {
 
             {/* BASE COMPONENTS */}
             <Route
-            path="/movie/:id"
-            component={MovieDetail}
-            fetchUrlMovie={requests.fetchMovieDetails}
-          />
-                    <Route
-            path="/tv/:id"
-            component={TvDetail}
-            fetchUrlMovie={requests.fetchMovieDetails}
-          />
-          <Route
-            path="/person/:id"
-            component={PersonDetail}
-            fetchUrlMovie={requests.fetchMovieDetails}
-          />
+              path="/movie/:id"
+              component={MovieDetail}
+              fetchUrlMovie={requests.fetchMovieDetails}
+            />
+            <Route
+              path="/tv/:id"
+              component={TvDetail}
+              fetchUrlMovie={requests.fetchMovieDetails}
+            />
+            <Route
+              path="/person/:id"
+              component={PersonDetail}
+              fetchUrlMovie={requests.fetchMovieDetails}
+            />
             <Route exact path="/">
               <Home />
             </Route>
@@ -68,7 +68,7 @@ function App() {
               <Delete />
             </Route>
 
-            
+
 
             {/* REE COMPONENTS */}
             <Route exact path='/' component={Home} />
