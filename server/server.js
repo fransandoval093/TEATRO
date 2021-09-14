@@ -54,7 +54,7 @@ app.get('/api/getList', (req, res) => {
       console.log("Page has been evaluated!");
       console.log(issueSrcs);
 
-      res.json(issueSrcs);
+      res.text(issueSrcs);
       // End Puppeteer
       await browser.close();
       return issueSrcs;
