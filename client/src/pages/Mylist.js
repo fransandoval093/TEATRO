@@ -7,8 +7,8 @@ import { QUERY_MATCHUPS } from '../utils/queries';
 import { DELETE_MATCHUP } from '../utils/mutations'
 
 import "../App.css";
-import Row from "./Row";
-import requests from "./requests";
+// import Row from "./Row";
+// import requests from "./requests";
 import Banner from "./Banner";
 
 const Mylist = () => {

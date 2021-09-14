@@ -1,82 +1,27 @@
+
 import React, { useState, useEffect, useRef } from "react";
-// import YouTube from "react-youtube";
-// import movieTrailer from "movie-trailer";
 import axios from "./axios";
 import "./Row.css";
 import { Link } from "react-router-dom";
 import gsap, {TweenMax ,Expo, } from 'gsap';
-
-
-
 const base_url = "https://image.tmdb.org/t/p/original/";
 
 
-function Row({title, fetchUrlMovie, isLargeRow }) {
-  const [movies, setMovies] = useState([]);
-  // const [tvs, setTvs] = useState([]);
-  // const [trailerUrl, setTrailerUrl] = useState("");
-  let tl = gsap.timeline({defaults: {ease: "SlowMo.easeOut"}})
-  let imgs = useRef(null)
-  useEffect(() => {
-    async function fetchData() {
-      const request = await axios.get(fetchUrlMovie);
-      setMovies(request.data.results);
-      return request;
-    }
-    console.log(fetchUrlMovie);
-    fetchData();
-  }, [fetchUrlMovie]);
-  
-  // useEffect(() => {
-  //   async function fetchTv() {
-  //     const request = await axios.get(fetchUrlTv);
-  //     setTvs(request.data.results);
-  //     return request;
-  //   }
-  //   console.log(fetchUrlTv);
-  //   fetchTv();
-  // }, [fetchUrlTv]);
-
-
-  useEffect(() =>{
-    
-    gsap.from(
-      imgs,
-      {
-          opacity: 1,
-          stagger:1.2,
-          scale: 1.1,
-          delay: 2,
-          duration:3,
-      }
-     
-    );
-  })
-
-
-  // const opts = {
-  //   height: "390",
-  //   width: "100%",
-  //   playerVars: {
-  //     autoplay: 1,
-  //   },
-  // };
-
-  // const handleClick = (movie) => {
-  //   if (trailerUrl) {
-  //     setTrailerUrl("");
-  //   } else {
-  //     movieTrailer(movie?.name || movie?.title || movie?.original_name || "")
-  //       .then((url) => {
-  //         const urlParams = new URLSearchParams(new URL(url).search);
-  //         setTrailerUrl(urlParams.get("v"));
-  //       })
-  //       .catch((error) => console.log(error));
-  //   }
-  // };
-  return (
-
-    <div className="row">
+function SimilarMovie({title, fetchUrl, isLargeRow}) {
+    const [movies, setMovies] = useState([]);
+    let imgs = useRef(null)
+    useEffect(() => {
+        async function fetchData() {
+          const request = await axios.get(fetchUrl);
+          setMovies(request.data.results);
+          return request;
+        }
+        console.log(fetchUrl);
+        fetchData();
+      }, [fetchUrl]);
+      
+    return (
+        <div className="row">
       {/* {Title} */}
       <h2 className="title" >{title}</h2>
       
@@ -143,8 +88,7 @@ function Row({title, fetchUrlMovie, isLargeRow }) {
       
       {/* {trailerUrl && <YouTube videoId={trailerUrl} opts={opts} />} */}
     </div>
-    
-  );
+    )
 }
 
-export default Row;
+export default SimilarMovie
