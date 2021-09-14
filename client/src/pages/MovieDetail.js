@@ -21,12 +21,6 @@ function MovieDetail({ match }) {
   const [similars, setSimilars] = useState([]);
   const [isOpen, setIsOpen] = useState(false)
 
-  function year(str, n) {
-    return str?.length > n ? str.slice(0, 4) + "" : str;
-  }
-  function stringHandler(str) {
-    return str.replaceAll(" ", "-").toLowerCase();
-  }
   function truncate(str, n) {
     return str?.length > n ? str.substr(0, n - 1) + "..." : str;
   }
@@ -84,7 +78,7 @@ function MovieDetail({ match }) {
     );
     
     console.log(formatHyphen(movie.original_title));
-    console.log(year(movie.release_date, 4));
+    console.log(formatYear(movie.release_date, 4));
     console.log(movie.tagline);
 
     const movieList = await fetchList.json();
@@ -140,6 +134,7 @@ function MovieDetail({ match }) {
             <h1>{movie.original_title}</h1>
               <h1>{movie.overview}</h1>
               
+
           <h1>{Math.floor(movie.runtime / 60)}h {movie.runtime % 60}min</h1>
           <h1>{movie?.name}</h1>
           <button

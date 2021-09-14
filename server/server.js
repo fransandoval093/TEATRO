@@ -32,13 +32,19 @@ app.get('/api/getList', (req, res) => {
   const puppet = async () => {
     try {
       // Initialize Puppeteer
-      const browser = await puppeteer.launch();
+      const browser = await puppeteer.launch({
+        args: [
+          "--no-sandbox",
+          "--disable-setuid-sandbox",
+          "--disable-dev-shm-usage",
+        ],
+      });
       const page = await browser.newPage();
       // Specify comic issue page url
       await page.goto(
         `https://mycima.actor:2083/watch/%D9%85%D8%B4%D8%A7%D9%87%D8%AF%D8%A9-%D9%81%D9%8A%D9%84%D9%85-${moviename}-${movieyear}-%D9%85%D8%AA%D8%B1%D8%AC%D9%85/`
       );
-      console.log("page has been loaded!");
+      console.log("Puppet-Links page has been loaded!");
       const issueSrcs = await page.evaluate(() => {
         const srcs = Array.from(
           document.querySelectorAll("btn")
@@ -64,10 +70,12 @@ app.get('/api/getList', (req, res) => {
   // res.json(list);
   console.log('Sent list of items');
 });
+
 // REE | Handles any requests that don't match the ones above
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname + '../client/build/index.html'));
 });
+
 app.get('/barfoo', (req, res) => {
   console.log("+++++++++");
   console.log("REQUEST | params , query , route");
