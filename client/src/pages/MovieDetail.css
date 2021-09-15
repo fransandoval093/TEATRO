@@ -11,10 +11,10 @@
   position: absolute;
   top: 0;
   left: 0;
-  object-fit: fill;
+  object-fit: cover;
   color: white;
   /* object-fit: contain; */
-  max-height: auto;
+  max-height: 99vh;
   width: 100%;
   z-index: 1;
   
@@ -25,8 +25,8 @@
   position: absolute;
   top: 0;
   left: 0;
-  width: 100vw;
-  height: 100vh;
+  width: 99vw;
+  height: 99vh;
   z-index: 2;
 
 }
@@ -47,13 +47,14 @@
   display: flex;
   position: absolute;
   top: 0;
-  left: 0;
+  left: 150px;
   z-index: 22;
   flex-direction: column;
   align-items: flex-start;
-  width: 45rem;
+  width: 30rem;
   line-height: 1.3;
   padding-top: 20rem;
+  margin-top: 100px;
   font-size: 0.8rem;
   max-width: 560px;
   height: 80px;
@@ -71,23 +72,28 @@
   position: absolute;
   top: 0;
   z-index: 2;
-  margin-top: 200px;
+  margin-top: 50px;
   padding-bottom: 200px;
-  padding-top: 100px;
+  padding-top: 50px;
 }
+
+
 .poster__overview{
   width: auto;
   height: 50vh;
- margin-left: 200px;
+  margin-left: 200px;
   border-radius: 10px;
+  padding-top: 20px;
 }
 .movie_story h1{
-  font-size: 1.2rem;
+  font-size: 0.8rem;
   padding-bottom: 40px;
-  padding-left: 200px;
+  padding-left: 100px;
   text-align:left ;
-  width: 600px;
+  width: 300px;
 }
+
+
 .movie_information{
   display: flex;
   text-align:left;
@@ -95,19 +101,19 @@
 .movie_information h1{
   font-size: 1.2rem;
   padding-bottom: 20px;
-  padding-left: 200px;
+  padding-left: 100px;
 }
 
 .movie_info h1{
   font-size: 1.2rem;
   padding-bottom: 20px;
-  padding-left: 200px;
+  padding-left: 100px;
 }
 
 .movie_api_info h1{
   font-size: 1.2rem;
   padding-bottom: 20px;
-  padding-left: 200px;
+  padding-left: 100px;
 }
 
 
@@ -115,7 +121,7 @@
 .cast-details {
   display: flex;
   justify-content: center;
-
+  padding-top: 1200px;
 }
 .img__actor {
   object-fit: contain;
@@ -149,9 +155,11 @@
   padding-left: 2rem;
   padding-right: 2rem;
   margin-right: 1rem;
-  margin-top: 50px;
+  margin-bottom: 20px;
+  margin-left: 100px;
+ 
   padding-top: 0.5rem;
-  background-color: rgba(51, 51, 51, 0.5);
+  background-color: #D01926;
   padding-bottom: 0.5rem;
 }
 
