@@ -150,7 +150,7 @@ function MovieDetail({ match }) {
         <h1>Cast</h1>
         </div>
         {credits.slice(0, 10).map((credit) => (
-          <Link to={`/person/${credit.id}`}  >
+          <Link style={{ textDecoration: 'none' ,color:"white"}}  to={`/person/${credit.id}`}  >
           <div className="row__cast">
             <div className="img__cast">
               <img

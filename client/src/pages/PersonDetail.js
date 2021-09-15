@@ -83,7 +83,7 @@ https://api.themoviedb.org/3/person/${match.params.id}/tv_credits?api_key=d42525
         )`,
               backgroundPosition: "top center",
             }}
-            className="large__poster"
+            className="large__poster__person"
             src={`${base_url}${credits.profile_path || credits.poster_path}`}
             alt={credits.name}
           />
@@ -101,7 +101,7 @@ https://api.themoviedb.org/3/person/${match.params.id}/tv_credits?api_key=d42525
         <div className="person_movie_list_search">
         <h1>Movies</h1>
       {movies.map((movie) => (
-           <Link to={`/movie/${movie.id}`}  >
+           <Link style={{ textDecoration: 'none' ,color:"white"}}  to={`/movie/${movie.id}`}  >
           <div className="person__row__cast">
             <div className="person__img__cast">
             
@@ -123,7 +123,7 @@ https://api.themoviedb.org/3/person/${match.params.id}/tv_credits?api_key=d42525
         <div className="person_tv_list_search">
         <h1>TV</h1>
         {tvs.map((tv) => (
-           <Link to={`/tv/${tv.id}`}  >
+           <Link style={{ textDecoration: 'none' ,color:"white"}}  to={`/tv/${tv.id}`}  >
           <div className="person__row__cast">
             <div className="person__img__cast">
             
