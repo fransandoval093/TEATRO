@@ -18,62 +18,71 @@ const server = new ApolloServer({
 
 server.applyMiddleware({ app });
 
-
 // // REE | Serve the static files from the React app
 app.use(express.static(path.join(__dirname, '../client/build')));
 // REE | Puppeteer Endpoint
-app.get('/api/getList', (req, res) => {
+app.get('/api/getList', async (req, res) => {
+
   console.log("REQUEST | params , query , route");
   console.log("+++++++++");
   console.log(req.query); // /lor/creatures/hobbit?familyname=Baggins&home=Shire
-  console.log(req.route); // /lor/creatures/hobbit?familyname=Baggins&home=Shire
+  console.log(req.route.path); // /lor/creatures/hobbit?familyname=Baggins&home=Shire
   console.log("+++++++++");
+
   const { moviename, movieyear } = req.query
-  const puppet = async () => {
+
+  async function puppet() {
+    // PUPPET | TRY-CATCH Error handling for remote website requests
     try {
-      // Initialize Puppeteer
+      //PUPPET | Initialize Puppeteer
       const browser = await puppeteer.launch({
         args: [
-          "--no-sandbox",
+          // "--no-sandbox",
           "--disable-setuid-sandbox",
           "--disable-dev-shm-usage",
+          "--enable-low-end-device-mode",
+          // "--single-process",
         ],
       });
+
+      // PUPPET | Specify an page url to open
       const page = await browser.newPage();
-      // Specify comic issue page url
+
+      // PUPPET | Specify page url
       await page.goto(
         `https://mycima.actor:2083/watch/%D9%85%D8%B4%D8%A7%D9%87%D8%AF%D8%A9-%D9%81%D9%8A%D9%84%D9%85-${moviename}-${movieyear}-%D9%85%D8%AA%D8%B1%D8%AC%D9%85/`
       );
-      console.log("Puppet-Links page has been loaded!");
-      const issueSrcs = await page.evaluate(() => {
+
+      console.log("PUPPET | Page has been evaluated!");
+
+      const data = await page.evaluate(() => {
         const srcs = Array.from(
           document.querySelectorAll("btn")
         ).map((btn) => btn.getAttribute("data-url"));
         return srcs;
       });
-      console.log("Page has been evaluated!");
-      console.log(issueSrcs);
 
-      res.json(issueSrcs);
+      console.log("PUPPET | Puppet Strings from page have been loaded.");
+      console.log("PUPPET RESPONSE | puppetstrings \n", data);
+
       // End Puppeteer
       await browser.close();
-      return issueSrcs;
+      // return puppetStrings;
+
+      return [data, null];
     } catch (error) {
-      console.log(error);
+      console.error(error)
+      return [null, error]
     }
   };
+  const [data, error] = await puppet();
 
-  puppetList = puppet();
-  console.log(puppetList);
-
-  // var list = ["ayad", "david", "fran"];
-  // res.json(list);
-  console.log('Sent list of items');
+  res.send(JSON.stringify(data))
 });
 
 // REE | Handles any requests that don't match the ones above
 app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname + '../client/build/index.html'));
+  res.sendStatus;
 });
 
 app.get('/barfoo', (req, res) => {

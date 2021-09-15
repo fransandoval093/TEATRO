@@ -14,8 +14,9 @@ function MovieDetail({ match }) {
     fetchSimilars();
     console.log(match.params.id);
   }, [match]);
-  const [movieQuery, setMovieQuery] = useState([]);
-  const [queryStatus, setQueryStatus] = useState("GET MOVIE")
+
+  const [queryResult, setQueryResult] = useState("");
+  const [queryStatus, setQueryStatus] = useState("GET MOVIE");
   const [movie, setMovie] = useState({});
   const [credits, setCredits] = useState([]);
   const [trailerUrl, setTrailerUrl] = useState("");
@@ -84,12 +85,10 @@ useEffect(() => {
 
   function truncate(str, n) {
     return str?.length > n ? str.substr(0, n - 1) + "..." : str;
-  }
-
+  };
   const formatYear = (str, n) => {
     return str?.length > n ? str.slice(0, 4) + "" : str;
   };
-
   const formatHyphen = (punctuatedString) => {
     // var s = ", -/ is #! an $ % ^ & * example ;: {} of a = -_ string with `~)() punctuation";
     var s = punctuatedString
@@ -111,7 +110,7 @@ useEffect(() => {
   const fetchCredits = async () => {
     const fetchCredits = await fetch(
       `
-      https://api.themoviedb.org/3/movie/${match.params.id}/credits?api_key=d42525da8940f7a7a298e98a209ec951&language=en-US`
+        https://api.themoviedb.org/3/movie/${match.params.id}/credits?api_key=d42525da8940f7a7a298e98a209ec951&language=en-US`
     );
 
     const credits = await fetchCredits.json();
@@ -130,27 +129,41 @@ useEffect(() => {
     setSimilars(similars.results);
     console.log(similars);
   };
-
-  const fetchMovieQuery = async (movie) => {
-    
+  const fetchQuery = async (movie) => {
     setQueryStatus("GETTING...")
-    const fetchList = await fetch(
+    const theFilm = await fetch(
       `/api/getList?moviename=${formatHyphen(movie.original_title)}&movieyear=${formatYear(movie.release_date, 4)}`
     );
-    
-    console.log(formatHyphen(movie.original_title));
-    console.log(formatYear(movie.release_date, 4));
+
+    const film = await theFilm.json();
+    setQueryResult(film.slice(0, 1));
+    console.log(film);
+
+    setQueryStatus("ENJOY")
+
+    // TESTING | Various console logs
+    console.log("TESTING | Movie input\n", formatHyphen(movie.original_title));
+    console.log("TESTING | Year input\n", formatYear(movie.release_date, 4));
     console.log(movie.tagline);
 
-    const movieList = await fetchList.json();
-    const movieJson = await movieList.slice(0, 1);
+    // console.log("TESTING | data1 \n");
+    // fetch(`/api/getList?moviename=${formatHyphen(movie.original_title)}&movieyear=${formatYear(movie.release_date, 4)}`)
+    //   .then(response => response.json())
+    //   .then(data => console.log("DATA1 | thenthen \n",data)
+    // );
 
-    if (movieJson) {
-      setQueryStatus("GET MOVIE")
-    }
-    setMovieQuery(movieJson);
-    console.log(movieJson);
-  };
+    // JSON ERROR TESTING
+    console.log("TESTING | data2 \n");
+    fetch(`/api/getList?moviename=${formatHyphen(movie.original_title)}&movieyear=${formatYear(movie.release_date, 4)}`).then(async response => {
+      try {
+        const data = await response.json()
+        console.log('RESPONSE DATA2 | Error handling and data?\n', data)
+      } catch (error) {
+        console.log('Error happened here!')
+        console.error(error)
+      }
+      })
+    };
 
   const opts = {
     height: "390",
@@ -159,7 +172,6 @@ useEffect(() => {
       autoplay: 1,
     },
   };
-
   // RETRIEVES TRAILER 
   const handleClick = (movie) => {
     if (trailerUrl) {
@@ -179,6 +191,7 @@ useEffect(() => {
   return (
 
     <div className="movie__details">
+
       <div className="background-blur"></div>
       <div className="poster">
         <div className="movie__info">
@@ -205,8 +218,7 @@ useEffect(() => {
           <button
           
             className="trailer__button movie__button"
-            onClick={() =>  { fetchMovieQuery(movie) ; setIsOpen(true)} }>
-            
+            onClick={() => {fetchQuery(movie); setIsOpen(true)}}>
             {queryStatus}
             {/* <button  className="trailer__button movie__button" onClick={() => setIsOpen(true)}></button> */}
           </button>
@@ -234,13 +246,15 @@ useEffect(() => {
           </div>
         </div>
         <Model open={isOpen} onClose={() => setIsOpen(false)} >
-          {movieQuery.length ? (
+          
+          {queryResult.length ? (
             <div>
               {/* Render the list of items */}
               
-              {movieQuery.map((item) => {
+              {queryResult.map((item) => {
                 return (
                   <div>
+                    <hr></hr>
                     <h6>{movie.tagline}</h6>
                     <iframe title="hi"
                       name="watch" id="IframeEmbed" height="580px" width="1080px"
@@ -256,9 +270,10 @@ useEffect(() => {
           ) : (
             <div>
               
-              <h4>No Movies Found Yet</h4>
+              <h4>Please wait...</h4>
             </div>)
           }
+
           </Model>
         <div className="cast-details">
             <div className="cast">
@@ -321,11 +336,11 @@ useEffect(() => {
                   </div>
                 </div>
               </Link>
-            )
-            )}
+            ))};
           </div>
         </div>
       </div>
+
     
       {trailerUrl && <YouTube videoId={trailerUrl} opts={opts} />}
       
