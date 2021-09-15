@@ -22,3 +22,29 @@ const matchupSchema = new Schema({
 const Matchup = model('Matchup', matchupSchema);
 
 module.exports = Matchup;
+
+//To be used when ready.
+
+// const watchlistSchema = new Schema(
+//   {
+//     title: {
+//       type: String,
+//       required: true,
+//       unique: true,
+//     },
+//     type: {
+//       type: String,
+//     },
+//     genre: {
+//       type: String,
+//     },
+//     content: {
+//       type:Array
+//     },
+//   },
+//   { timestamps: true }
+// );
+
+// const Watchlist = model('Watchlist', watchlistSchema);
+
+// module.exports = Watchlist;

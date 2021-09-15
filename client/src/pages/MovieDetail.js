@@ -82,12 +82,6 @@ useEffect(() => {
 
   
 
-  function year(str, n) {
-    return str?.length > n ? str.slice(0, 4) + "" : str;
-  }
-  function stringHandler(str) {
-    return str.replaceAll(" ", "-").toLowerCase();
-  }
   function truncate(str, n) {
     return str?.length > n ? str.substr(0, n - 1) + "..." : str;
   }
@@ -144,8 +138,8 @@ useEffect(() => {
       `/api/getList?moviename=${formatHyphen(movie.original_title)}&movieyear=${formatYear(movie.release_date, 4)}`
     );
     
-    console.log(formatHyphen(movie.title));
-    console.log(year(movie.release_date, 4));
+    console.log(formatHyphen(movie.original_title));
+    console.log(formatYear(movie.release_date, 4));
     console.log(movie.tagline);
 
     const movieList = await fetchList.json();
