@@ -146,23 +146,24 @@ useEffect(() => {
     console.log("TESTING | Year input\n", formatYear(movie.release_date, 4));
     console.log(movie.tagline);
 
-    console.log("TESTING | data \n");
-    fetch(`/api/getList?moviename=${formatHyphen(movie.original_title)}&movieyear=${formatYear(movie.release_date, 4)}`)
-      .then(response => response.json())
-      .then(data => console.log(data)
-      );
+    // console.log("TESTING | data1 \n");
+    // fetch(`/api/getList?moviename=${formatHyphen(movie.original_title)}&movieyear=${formatYear(movie.release_date, 4)}`)
+    //   .then(response => response.json())
+    //   .then(data => console.log("DATA1 | thenthen \n",data)
+    // );
 
     // JSON ERROR TESTING
+    console.log("TESTING | data2 \n");
     fetch(`/api/getList?moviename=${formatHyphen(movie.original_title)}&movieyear=${formatYear(movie.release_date, 4)}`).then(async response => {
       try {
         const data = await response.json()
-        console.log('response data?', data)
+        console.log('RESPONSE DATA2 | Error handling and data?\n', data)
       } catch (error) {
         console.log('Error happened here!')
         console.error(error)
       }
-    })
-  };
+      })
+    };
 
   const opts = {
     height: "390",
@@ -190,6 +191,7 @@ useEffect(() => {
   return (
 
     <div className="movie__details">
+
       <div className="background-blur"></div>
       <div className="poster">
         <div className="movie__info">
@@ -244,6 +246,7 @@ useEffect(() => {
           </div>
         </div>
         <Model open={isOpen} onClose={() => setIsOpen(false)} >
+          
           {queryResult.length ? (
             <div>
               {/* Render the list of items */}
@@ -267,9 +270,10 @@ useEffect(() => {
           ) : (
             <div>
               
-              <h4>No Movies Found Yet</h4>
+              <h4>Please wait...</h4>
             </div>)
           }
+
           </Model>
         <div className="cast-details">
             <div className="cast">
@@ -332,8 +336,7 @@ useEffect(() => {
                   </div>
                 </div>
               </Link>
-            )
-            )}
+            ))};
           </div>
         </div>
       </div>
