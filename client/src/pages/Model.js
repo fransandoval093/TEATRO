@@ -1,13 +1,13 @@
 import React from 'react'
 import './Model.css'
-import { MdCancel } from 'react-icons/md';
+import { GiCancel } from 'react-icons/gi';
 
 
 function Model({ open, children, onClose}) {
     if(!open) return null
     return (
         <div className="popup">
-            <button onClick= {onClose}><MdCancel size="3em"/></button>
+            <button  onClick= {onClose}><GiCancel size="2em" color="#D01926" /></button>
             {children}
         </div>
     )

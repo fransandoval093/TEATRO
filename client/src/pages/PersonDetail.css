@@ -9,6 +9,9 @@
     
 
 }
+.large__poster__person{
+    width: 500px;
+}
 
 .poster__info{
     font-size: 0.8rem;
@@ -16,8 +19,15 @@
     padding-left: 50px;
     color: white;
 }
+
+.poster__info h1{
+    font-size: 0.8rem;
+    padding-top: 30px;
+}
 .person__description{
-    font-size: 0.5rem;
+    font-size: 0.8rem;
+    width: 500px;
+    line-height: normal;
 }
 
 
@@ -65,5 +75,5 @@
 
 
 .more_like_this{
-    padding-top: 500px;
+   padding-top: 100px;
 }

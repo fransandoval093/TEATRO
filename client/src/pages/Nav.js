@@ -27,6 +27,7 @@ function Nav({ fetchUrl }) {
 
   const handleOnChange = (e) => {
     setSearchTeam(e.target.value);
+    
   };
 
   return (

@@ -85,7 +85,7 @@ function Row({title, fetchUrlMovie, isLargeRow }) {
       <div className="row__posters" ref={el => imgs = el}>
       
         {movies.map((movie) => (
-          <Link to={`/movie/${movie.id}`}  >
+          <Link style={{ textDecoration: 'none' ,color:"white"}}  to={`/movie/${movie.id}`}  >
             
             <div className="poster" >
             <img

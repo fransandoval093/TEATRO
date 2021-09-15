@@ -1,9 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import "./MovieDetail.css";
 import movieTrailer from "movie-trailer";
 import YouTube from "react-youtube";
 import { Link } from "react-router-dom";
 import Model from "./Model";
+import gsap, { timeline, TweenMax, Expo } from "gsap";
 
 const base_url = "https://image.tmdb.org/t/p/original/";
 function MovieDetail({ match }) {
@@ -20,6 +21,66 @@ function MovieDetail({ match }) {
   const [trailerUrl, setTrailerUrl] = useState("");
   const [similars, setSimilars] = useState([]);
   const [isOpen, setIsOpen] = useState(false)
+  // ====
+  // Animation
+  // ===
+  const tl = gsap.timeline({ defaults: { ease: "power1.out" } });
+
+  let titleAnimation = useRef(null)
+  let movieOverAnimation = useRef(null)
+  let laragePosterAnimation = useRef(null)
+  let smallPosterAnimation = useRef(null)
+useEffect(() => {
+  tl.to(
+    laragePosterAnimation,
+    1,
+    {
+      opacity: 1,
+      scale: "1",
+      overflow: "hidden",
+      ease: Expo.easeInOut,
+    },
+    
+  );
+  
+  tl.to(
+    titleAnimation,
+    1,
+    {
+      opacity: 1,
+      x: 50,
+      ease: Expo.easeInOut,
+    },
+    
+  );
+
+  tl.to(
+    smallPosterAnimation,
+    1,
+    {
+      opacity: 1,
+      x: 40,
+      scale: "1.1",
+      ease: Expo.easeInOut,
+    },
+    "-=1"
+  );
+  tl.to(
+    movieOverAnimation,
+    2,
+    {
+      opacity: 1,
+      scale: "1.1",
+      ease: Expo.easeInOut,
+    },
+    "-=1"
+  );
+  
+  
+});
+
+
+  
 
   function year(str, n) {
     return str?.length > n ? str.slice(0, 4) + "" : str;
@@ -83,7 +144,7 @@ function MovieDetail({ match }) {
       `/api/getList?moviename=${formatHyphen(movie.original_title)}&movieyear=${formatYear(movie.release_date, 4)}`
     );
     
-    console.log(formatHyphen(movie.original_title));
+    console.log(formatHyphen(movie.title));
     console.log(year(movie.release_date, 4));
     console.log(movie.tagline);
 
@@ -127,8 +188,8 @@ function MovieDetail({ match }) {
       <div className="background-blur"></div>
       <div className="poster">
         <div className="movie__info">
-          <div className="movie__overview">
-            <div className="small_poster">
+          <div className="movie__overview" ref={el => movieOverAnimation = el}>
+            <div className="small_poster"ref={el => smallPosterAnimation = el} >
               <img
                 key={movie.id}
                 className="poster__overview"
@@ -136,12 +197,12 @@ function MovieDetail({ match }) {
                 alt={movie.name}
               />
             </div>
-            <div className="movie_story">
-            <h1>{movie.original_title}</h1>
-              <h1>{movie.overview}</h1>
+            <div className="movie_story" ref={el =>  titleAnimation = el}>
+            <h1 >{movie.original_title}</h1>
+            <h1 className="description" >{truncate(movie.overview, 250)}</h1>
               
-          <h1>{Math.floor(movie.runtime / 60)}h {movie.runtime % 60}min</h1>
-          <h1>{movie?.name}</h1>
+              <h1>{Math.floor(movie.runtime / 60)}h {movie.runtime % 60}min</h1>
+          
           <button
             className="trailer__button"
             onClick={() => handleClick(movie)}>
@@ -156,7 +217,29 @@ function MovieDetail({ match }) {
             {/* <button  className="trailer__button movie__button" onClick={() => setIsOpen(true)}></button> */}
           </button>
           {/* Check to see if any items are found*/}
-          <Model open={isOpen} onClose={() => setIsOpen(false)} >
+
+              <div className="movie_information">
+                <div className="movie_info">
+                  <h1>Released </h1>
+                  <h1>Budget </h1>
+                  <h1>Revenue </h1>
+                  <h1>Status</h1>
+                  <h1>Runtime</h1>
+                  <h1>Genre </h1>
+                </div>
+                <div className="movie_api_info">
+                  <h1>{movie.release_date}</h1>
+                  <h1>${movie.budget}</h1>
+                  <h1>${movie.revenue}</h1>
+                  <h1>{movie.status}</h1>
+                  <h1>{Math.floor(movie.runtime / 60)}h {movie.runtime % 60}min</h1>
+                  {/* <h1>{movie.genres[0].name}, {movie.genres[1].name}</h1> */}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <Model open={isOpen} onClose={() => setIsOpen(false)} >
           {movieQuery.length ? (
             <div>
               {/* Render the list of items */}
@@ -183,33 +266,12 @@ function MovieDetail({ match }) {
             </div>)
           }
           </Model>
-              <div className="movie_information">
-                <div className="movie_info">
-                  <h1>Released </h1>
-                  <h1>Budget </h1>
-                  <h1>Revenue </h1>
-                  <h1>Status</h1>
-                  <h1>Runtime</h1>
-                  <h1>Genre </h1>
-                </div>
-                <div className="movie_api_info">
-                  <h1>{movie.release_date}</h1>
-                  <h1>${movie.budget}</h1>
-                  <h1>${movie.revenue}</h1>
-                  <h1>{movie.status}</h1>
-                  <h1>{Math.floor(movie.runtime / 60)}h {movie.runtime % 60}min</h1>
-                  {/* <h1>{movie.genres[0].name}, {movie.genres[1].name}</h1> */}
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
         <div className="cast-details">
             <div className="cast">
               <h1>Cast</h1>
             </div>
             {credits.slice(0, 10).map((credit) => (
-              <Link to={`/person/${credit.id}`}  >
+              <Link style={{ textDecoration: 'none' ,color:"white"}} to={`/person/${credit.id}`}  >
                 <div className="row__cast">
                   <div className="img__cast">
 
@@ -231,15 +293,12 @@ function MovieDetail({ match }) {
           <img
             style={{
               background: "cover",
-              backgroundImage: `url(
-            "https://image.tmdb.org/t/p/original/${movie?.backdrop_path}"
-        )`,
               backgroundPosition: "center center",
             }}
             className="large__poster"
             src={`${base_url}${movie.backdrop_path || movie.poster_path}`}
             alt={movie.name}
-          />
+            ref={el =>  laragePosterAnimation = el} />
         </div>
       </div>
 
@@ -251,7 +310,7 @@ function MovieDetail({ match }) {
           <div className="row__posters" >
             <h1>More Like this</h1>
             {similars.map((similar) => (
-              <Link to={`/movie/${similar.id}`}  >
+              <Link style={{ textDecoration: 'none' ,color:"white" }} to={`/movie/${similar.id}`}  >
                 <div className="poster" >
                   <img
                     key={similar.id}
@@ -273,9 +332,9 @@ function MovieDetail({ match }) {
           </div>
         </div>
       </div>
-      <Model>
+    
       {trailerUrl && <YouTube videoId={trailerUrl} opts={opts} />}
-      </Model>
+      
     </div>
   );
 }

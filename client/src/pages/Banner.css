@@ -3,6 +3,37 @@
   object-fit: contain;
   height: 80vh;
 }
+.black{
+  color: black;
+}
+.color{
+  display: flex;
+}
+.color_red1{
+  background-color: #D01926;
+  width: 300px;
+  height: 100vh;
+}
+.color_red2{
+  background-color: #D01926;
+  width: 300px;
+  height: 100vh;
+  margin-left: 340px;
+}
+.color_red3{
+  background-color: #D01926;
+  width: 200px;
+  height: 100vh;
+  margin-left: 290px;
+}
+.color_red4{
+  background-color: #D01926;
+  width: 300px;
+  height: 100vh;
+  margin-left: 190px;
+}
+
+
 .all-details {
   display: flex;
   flex-direction: column;
@@ -14,6 +45,8 @@
   padding-top: 140px;
   height: 100px;
 }
+
+
 
 .banner__title {
   font-size: 2rem;
