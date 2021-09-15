@@ -37,11 +37,11 @@ app.get('/api/getList', async (req, res) => {
       //PUPPET | Initialize Puppeteer
       const browser = await puppeteer.launch({
         args: [
-          // "--no-sandbox",
+          "--no-sandbox",
           "--disable-setuid-sandbox",
           "--disable-dev-shm-usage",
           "--enable-low-end-device-mode",
-          // "--single-process",
+          "--single-process",
         ],
       });
 
